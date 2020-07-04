@@ -2,16 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>TitNasirle</title>
+    <title>Text Utils</title>
 </head>
 <body>
-    <h1>Hello to the text analyzer.Enter your text below</h1>
-    <form action="/removepunc" method="get">
+<h1>Welcome to the text analyzer. Enter your text below</h1>
+<form action='/analyze' method='get'>
+    <textarea name='text' style='margin: 0px; width: 721px; height: 93px;'></textarea>
+    <br>
 
-        <textarea name="textare" id="texta" cols="30" rows="10" style='margin: 0px;width: 721px; height: 93px;'></textarea>
-        <button type="submit" >analyze text</button>
-    </form>
+    <input type="checkbox" name="removepunc"> Remove Punctuations<br>
+    <button type='submit'> Analyze Text</button>
 
-
+</form>
 </body>
 </html>
