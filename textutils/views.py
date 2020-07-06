@@ -8,10 +8,6 @@ from django.shortcuts import render
 def index(request):
     return render(request, 'index.html')
 
-
-
-
-
 def analyze(request):
     #Get the text
     djtext = request.GET.get('text', 'default')
