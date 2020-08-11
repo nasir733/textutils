@@ -8,7 +8,7 @@ def index(request):
 
 
 def analyze(request):
-    #Get the text
+    # Get the text
     djtext = request.POST.get('text', 'default')
 
     # Check checkbox values
@@ -17,7 +17,7 @@ def analyze(request):
     newlineremover = request.POST.get('newlineremover', 'off')
     extraspaceremover = request.POST.get('extraspaceremover', 'off')
 
-    #Check which checkbox is on
+    # Check which checkbox is on
     if removepunc == "on":
         punctuations = '''!()-[]{};:'"\,<>./?@#$%^&*_~'''
         analyzed = ""
@@ -25,10 +25,10 @@ def analyze(request):
             if char not in punctuations:
                 analyzed = analyzed + char
 
-        params = {'purpose':'Removed Punctuations', 'analyzed_text': analyzed}
+        params = {'purpose': 'Removed Punctuations', 'analyzed_text': analyzed}
         djtext = analyzed
 
-    if(fullcaps=="on"):
+    if(fullcaps == "on"):
         analyzed = ""
         for char in djtext:
             analyzed = analyzed + char.upper()
@@ -36,10 +36,15 @@ def analyze(request):
         params = {'purpose': 'Changed to Uppercase', 'analyzed_text': analyzed}
         djtext = analyzed
 
-    if(extraspaceremover=="on"):
+    if(extraspaceremover == "on"):
         analyzed = ""
         for index, char in enumerate(djtext):
-            if not(djtext[index] == " " and djtext[index+1]==" "):
+            # It is for if a extraspace is in the last of the string
+            if char == djtext[-1]:
+                if not(djtext[index] == " "):
+                    analyzed = analyzed + char
+
+            elif not(djtext[index] == " " and djtext[index+1] == " "):
                 analyzed = analyzed + char
 
         params = {'purpose': 'Removed NewLines', 'analyzed_text': analyzed}
@@ -48,16 +53,12 @@ def analyze(request):
     if (newlineremover == "on"):
         analyzed = ""
         for char in djtext:
-            if char != "\n" and char!="\r":
+            if char != "\n" and char != "\r":
                 analyzed = analyzed + char
 
         params = {'purpose': 'Removed NewLines', 'analyzed_text': analyzed}
 
-    if(removepunc != "on" and newlineremover!="on" and extraspaceremover!="on" and fullcaps!="on"):
+    if(removepunc != "on" and newlineremover != "on" and extraspaceremover != "on" and fullcaps != "on"):
         return HttpResponse("please select any operation and try again")
 
     return render(request, 'analyze.html', params)
-
-
-
-
